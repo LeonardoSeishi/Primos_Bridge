@@ -18,11 +18,11 @@ public class ControladorContadorDePrimos {
     //Algoritmo crivo de Eratóstenes, eficiente para listar todos os números primos até k
     @GetMapping("/api/countPrimos")
     public RespostaPrimos contarPrimos(@RequestParam("k") Integer k) {  //assegurar que o número k é inteiro
-        long tempoInicio = System.currentTimeMillis();
+        long tempoInicio = System.currentTimeMillis(); //começar a contar o tempo de execução
         boolean[] ehPrimo = new boolean[k];         //lista de boleanos para verificar se é ou não primo
         List<Integer> primos = new ArrayList<>();   //lista dos número primos para mostrar o resultado
 
-        if (k == null || k < 1 || k > 10000) {
+        if (k == null || k < 1 || k > 10000) {      //gerar Exception caso k seja um número inválido
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Valor de k inválido.");
         }
 
@@ -38,10 +38,11 @@ public class ControladorContadorDePrimos {
             }
         }
 
-        long tempoFim = System.currentTimeMillis();
+        long tempoFim = System.currentTimeMillis(); //tempo final dos calculos
         return new RespostaPrimos(primos.size(), primos, tempoFim - tempoInicio);
     }
 
+    // Dados da resposta que será enviada e mostrada na interface
     static class RespostaPrimos {
         private final int quantidadePrimos;
         private final List<Integer> primos;
