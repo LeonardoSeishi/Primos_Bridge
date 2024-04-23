@@ -1,31 +1,113 @@
-.App {
-    text-align: center;
+/* Definindo uma fonte moderna e cores para toda a aplicação */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif; /* Fonte moderna */
+    background-color: #630e84; /* Fundo roxo */
 }
 
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
+.app {
+    text-align: center;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
+    justify-content: start;
+    color: white; /* Texto em branco */
+}
+
+.header {
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    font-weight: bold; /* Títulos em negrito */
+}
+
+.container {
+    display: flex;
+    width: 60%;
+    max-width: 1200px;
+}
+
+.history-panel {
+    flex: 0 0 30%; /* Largura fixa para o painel de histórico */
+    background-color: white; /* Fundo em branco */
+    padding: 12px;
+    overflow-y: auto;
+    border-right: 6px solid #128bf0; /* Divisória em azul */
+    border-left: 6px solid #128bf0; /* Divisória em azul */
+    color: black; /* Texto em preto */
+    font-size: 18px;
+}
+
+.input-result-panel {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.input-area,
+.result-area {
+    width: 100%;
+    max-width: 600px; /* Largura máxima para a área de entrada e resultado */
+    margin-bottom: 20px;
+}
+
+.input,
+.button {
+    padding: 15px; /* Aumenta o padding para mais conforto */
+    margin: 20px 15px; /* Ajusta o espaçamento vertical e horizontal */
+    border-radius: 15px;
+    font-size: 19px;
+    width: 80%;
+}
+
+.input {
+    border: 3px solid #128bf0; /* Mantém a borda azul */
+}
+
+.button {
+    background-color: #128bf0; /* Cor azul para o botão */
     color: white;
-}
-
-input {
-    margin: 10px;
-    padding: 8px;
-}
-
-button {
-    padding: 10px;
     cursor: pointer;
-    background-color: #61dafb;
-    border: none;
-    border-radius: 5px;
+    font-size: 22px;
+    font-weight: bold;
+    border: 3px solid white;
+    width: 86%;
+}
+
+.button:hover {
+    background-color: #6495ed; /* Azul mais claro no hover */
+}
+
+.result {
+    background-color: white; /* Fundo do resultado em roxo escuro para contraste */
+    color: black;
+    padding: 0px;
+    border-radius: 15px;
+    border: 4px solid #128bf0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 86%;
+    margin: 10px 40px;
+    font-size: 22px;
+    font-weight: bold
+
 }
 
 .error {
-    color: red;
+    color: #ff6347; /* Vermelho para erros */
+    padding: 10px;
+}
+
+/* Adicionando um pouco de responsividade */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .history-panel,
+    .input-result-panel {
+        width: 100%;
+    }
 }
