@@ -1,41 +1,46 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';    // hook useState para fazer o genrenciamento de estado
+import axios from 'axios';                  // axios para fazer chamadas HTTO
 import './App.css';
 
 function App() {
+    // estados para armazenar os dados recebidos do usuario ou resultados dos calculos de numeros primos
     const [k, setK] = useState('');
-    const [result, setResult] = useState(null);
-    const [timeElapsed, setTimeElapsed] = useState(null);
-    const [primes, setPrimes] = useState([]);
+    const [resultado, setResultado] = useState(null);
+    const [tempoTotal, setTempoTotal] = useState(null);
+    const [primos, setPrimos] = useState([]);
 
-    const [history, setHistory] = useState([]);
-    const [error, setError] = useState('');
+    const [historico, setHistorico] = useState([]);
+    const [erro, setErro] = useState('');
 
-    const handleCalculate = async () => {
-        if (k && k > 0 && k < 10000) {
+    // funcao chamada quando o usuario clicar no botao 'Calcular'
+    const calcularPrimos = async () => {
+        if (k && k > 0 && k <= 99999) { // verificacao se o numero 'k' e valido
             try {
-                const response = await axios.get(`http://localhost:8080/api/countPrimos?k=${k}`);
-                const data = {
+                // faz uma chamada GET para o back-end
+                const resposta = await axios.get(`http://localhost:8080/api/countPrimos?k=${k}`);
+                // extracao dos dados relevantes da resposta
+                const dados = {
                     k: k,
-                    result: response.data.quantidadePrimos,
-                    primes: response.data.primos || [],
-                    timeElapsed: response.data.tempoDecorrido
+                    resultado: resposta.data.quantidadePrimos,
+                    primos: resposta.data.primos || [],
+                    tempoTotal: resposta.data.tempoTotal
                 };
+                // atualizacao dos estados com os dados recebidos e adicao ao historico
+                setHistorico([...historico, dados]);
+                setResultado(resposta.data.quantidadePrimos);
+                setPrimos(resposta.data.primos || []);
+                setTempoTotal(resposta.data.tempoTotal);
+                setErro('');
 
-                setHistory([...history, data]); // Adicionando ao histórico
-                setResult(response.data.quantidadePrimos);
-                setPrimes(response.data.primos || []);
-                setTimeElapsed(response.data.tempoDecorrido);
-                setError('');
             } catch (err) {
-                setError('Erro ao buscar dados. Verifique se o backend está rodando.');
+                setErro('Erro ao buscar dados. Verifique se o backend está rodando.');
                 console.error('Erro ao fazer a requisição:', err);
             }
         } else {
-            setError('Por favor, insira um número válido.');
+            setErro('Por favor, insira um número válido.');
         }
     };
-
+    // JSX que define a estrutura do componente na pagina web
     return (
         <div className="app">
             <div className="header">
@@ -44,9 +49,9 @@ function App() {
             <div className="container">
                 <div className="history-panel">
                     <h2>Histórico de Consultas</h2>
-                    {history.map((entry, index) => (
-                        <div key={index} className="history-entry">
-                            <p>Para k={entry.k}: {entry.result} primos encontrados ({entry.primes.join(', ')}). Tempo: {entry.timeElapsed} ms</p>
+                    {historico.map((entrada, indice) => (
+                        <div key={indice} className="history-entry">
+                            <p>Para k={entrada.k}: {entrada.resultado} primos encontrados ({entrada.primos.join(', ')}). Tempo: {entrada.tempoTotal} ms</p>
                         </div>
                     ))}
                 </div>
@@ -59,17 +64,17 @@ function App() {
                             onChange={e => setK(e.target.value)}
                             placeholder="Digite um número"
                         />
-                        <button className="button" onClick={handleCalculate}>
+                        <button className="button" onClick={calcularPrimos}>
                             Calcular
                         </button>
                     </div>
                     <div className="result-area">
-                        {error && <div className="error">{error}</div>}
-                        {result !== null && (
+                        {erro && <div className="error">{erro}</div>}
+                        {resultado !== null && (
                             <div className="result">
-                                <p>Quantidade de primos: {result}</p>
-                                <p>Números primos: {primes.join(', ')}</p>
-                                <p>Tempo de execução: {timeElapsed} ms</p>
+                                <p>Quantidade de primos: {resultado}</p>
+                                <p>Números primos: {primos.join(', ')}</p>
+                                <p>Tempo de execução: {tempoTotal} ms</p>
                             </div>
                         )}
                     </div>
@@ -80,5 +85,3 @@ function App() {
 }
 
 export default App;
-
-
