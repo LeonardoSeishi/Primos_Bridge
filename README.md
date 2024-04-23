@@ -58,6 +58,7 @@ obs. Acesse `http://localhost:8080/api/countPrimos?k=10` para ver a api em açã
 4. https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 5. https://spring.io/guides/gs/serving-web-content
 6. https://spring.io/guides/gs/spring-boot
+7. https://stackoverflow.com/questions/35091524/spring-cors-no-access-control-allow-origin-header-is-present
 
 Diversos vídeos foram assistidos, para me ajudar com tecnologias que eu não conhecia anteriormente.
 Como por exemplo, criar um projeto usando spring boot e a integração do front e o back-end em um projeto full-stack.
